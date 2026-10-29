@@ -121,6 +121,11 @@ export interface SimResult {
   habits: Record<string, HabitState>;
   /** Клетки, которые заразятся, если не отметить привычки сегодня. */
   threatened: number[];
+  /**
+   * Сколько клеток заразят ещё не закрытые пропуски. Может быть больше threatened:
+   * часть будущих заражений сразу снимут уже поставленные отметки, и подсветить их заранее нельзя.
+   */
+  pendingInfections: number;
   stats: DayStats[];
   progress: { total: number; painted: number; infected: number; cleansed: number };
   completed: boolean;
