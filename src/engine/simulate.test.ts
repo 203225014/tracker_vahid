@@ -102,6 +102,18 @@ describe("справедливость", () => {
     expect(r.threatened).toHaveLength(10);
   });
 
+  it("незакрытый вчерашний пропуск учитывается, даже если сегодняшняя отметка его сразу снимет", () => {
+    const r = simulate({
+      picture: picture(10, 10, ["a"]),
+      habits: [habit("a", { grace: 0, backfillDays: 1 })],
+      completions: marks("a", [1, 2, 3, 5]),
+      pauses: [],
+      today: day(5),
+    });
+    expect(r.threatened).toHaveLength(0);
+    expect(r.pendingInfections).toBe(10);
+  });
+
   it("заражение не превышает cap и трогает только раскрашенное", () => {
     const r = simulate({
       picture: picture(10, 10, ["a"]),

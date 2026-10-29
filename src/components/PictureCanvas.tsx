@@ -66,11 +66,19 @@ export function PictureCanvas({ picture, cells, threatened = [], className }: Pr
           ctx.fillStyle = "#8a2be2";
           ctx.fillRect(x + ((i * 5) % 9) + 2, y + ((i * 3) % 9) + 2, 3, 3);
         } else if (state === Cell.Cleansed) {
+          // Очищенная клетка ждёт раскраски: светлый цвет области и белая искра, чтобы не путать с закрытой.
           ctx.fillStyle = "#ffffff";
           ctx.fillRect(x, y, size, size);
+          ctx.globalAlpha = 0.45;
+          ctx.fillStyle = color;
+          ctx.fillRect(x, y, size, size);
+          ctx.globalAlpha = 1;
           ctx.strokeStyle = color;
           ctx.lineWidth = 2;
-          ctx.strokeRect(x + 2, y + 2, size - 4, size - 4);
+          ctx.strokeRect(x + 1, y + 1, size - 2, size - 2);
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(x + 7, y + 4, 2, 8);
+          ctx.fillRect(x + 4, y + 7, 8, 2);
         } else {
           ctx.fillStyle = color;
           ctx.fillRect(x, y, size, size);

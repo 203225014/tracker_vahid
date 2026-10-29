@@ -16,10 +16,11 @@ export function simulate(input: SimInput): SimResult {
   real.cells.forEach((c, i) => {
     if ((c === Cell.Protected || c === Cell.Liberated) && worst.cells[i] === Cell.Infected) threatened.push(i);
   });
-  return { ...real, threatened };
+  const total = (r: typeof real) => r.stats.at(-1)?.infectedTotal ?? 0;
+  return { ...real, threatened, pendingInfections: total(worst) - total(real) };
 }
 
-function run(input: SimInput, closeAll: boolean): Omit<SimResult, "threatened"> {
+function run(input: SimInput, closeAll: boolean): Omit<SimResult, "threatened" | "pendingInfections"> {
   const { picture, habits, completions, pauses, today } = input;
   const { width, height, regionOf, regions } = picture;
   const random = rng(picture.seed);

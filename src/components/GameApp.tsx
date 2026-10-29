@@ -76,9 +76,10 @@ function TodayView({ game, result }: { game: GameState; result: SimResult }) {
       <p className="text-sm text-neutral-500">
         Раскрашено {pct}% · заражено {progress.infected} · ждут раскраски {progress.cleansed}
       </p>
-      {result.threatened.length > 0 && (
+      {result.pendingInfections > 0 && (
         <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
-          {result.threatened.length} клеток под угрозой: они мигают жёлтой рамкой и заразятся, если не отметить пропущенные привычки.
+          Пропущенные отметки заразят ещё {result.pendingInfections} клеток
+          {result.threatened.length > 0 ? " (мигают жёлтой рамкой)" : ""}. Отметьте привычки сегодня или нажмите «Сделал вчера», если уже сделали.
         </p>
       )}
       {result.completed && (
